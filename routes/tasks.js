@@ -84,15 +84,15 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
   try {
     const { name, description, deadline, completed, assignedUser, assignedUserName } = req.body;
-
-    if (!name || !deadline) {
+    const validDeadline = isNaN(Date.parse(deadline)) ? new Date() : new Date(deadline);
+    if (!name || !validDeadline) {
       return sendError(res, 'Missing required fields: name and deadline', 400);
     }
 
     const taskData = {
       name,
       description: description || '',
-      deadline: new Date(deadline),
+      deadline: isNaN(new Date(deadline)) ? new Date() : new Date(deadline),
       completed: !!completed,
       assignedUser: assignedUser || '',
       assignedUserName: assignedUserName || (assignedUser ? 'unknown' : 'unassigned'),

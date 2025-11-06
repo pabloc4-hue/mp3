@@ -28,8 +28,8 @@ def getUsers(conn):
     conn.request("GET","""/api/users?filter={"_id":1}""")
     response = conn.getresponse()
     data = response.read()
+    print("\n--- RAW RESPONSE ---\n", data, "\n--------------------\n")
     d = json.loads(data)
-
     # Array of user IDs
     users = [str(d['data'][x]['_id']) for x in range(len(d['data']))]
 
@@ -90,6 +90,7 @@ def main(argv):
         conn.request("POST", "/api/users", params, headers)
         response = conn.getresponse()
         data = response.read()
+        print("\n--- RAW RESPONSE ---\n", data, "\n--------------------\n")
         d = json.loads(data)
 
         # Store the users id
@@ -119,6 +120,7 @@ def main(argv):
         conn.request("POST", "/api/tasks", params, headers)
         response = conn.getresponse()
         data = response.read()
+        print("\n--- RAW RESPONSE ---\n", data, "\n--------------------\n")
         d = json.loads(data)
 
         taskID = str(d['data']['_id'])
@@ -129,6 +131,7 @@ def main(argv):
             conn.request("GET","""/api/users?where={"_id":\""""+assignedUserID+"""\"}""")
             response = conn.getresponse()
             data = response.read()
+            print("\n--- RAW RESPONSE ---\n", data, "\n--------------------\n")
             d = json.loads(data)
 
             # Store all the user properties
@@ -146,6 +149,7 @@ def main(argv):
             conn.request("PUT", "/api/users/"+assignedUserID, params, headers)
             response = conn.getresponse()
             data = response.read()
+            print("\n--- RAW RESPONSE ---\n", data, "\n--------------------\n")
             d = json.loads(data)
 
     # Exit gracefully
