@@ -87,18 +87,18 @@ router.post('/', async (req, res) => {
   try {
     const { name, email, pendingTasks } = req.body;
 
-    // 1️⃣ Validar campos obligatorios
+    // 1 - validate required fields
     if (!name || !email) {
       return sendError(res, 'Missing required fields: name and email', 400);
     }
 
-    // 2️⃣ Validar duplicados
+    // 2 - validate duplicates
     const existing = await User.findOne({ email }).exec();
     if (existing) {
       return sendError(res, 'Email already exists', 400);
     }
 
-    // 3️⃣ Crear usuario
+    // 3 - create user
     const user = await User.create({
       name,
       email,
@@ -109,7 +109,7 @@ router.post('/', async (req, res) => {
 
   } catch (err) {
     console.error('POST /api/users error:', err);
-    // 4️⃣ Mensaje de error claro para MP3
+    // 4- message of generic error
     return sendError(res, 'Server error while creating user', 500, err.message);
   }
 });

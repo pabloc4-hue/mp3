@@ -17,7 +17,7 @@ mongoose.connect(process.env.MONGODB_URI, {
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.get('/', (req, res) => {
-  res.send('✅ MP3 API is running. Try /api/users or /api/tasks');
+  res.send('MP3 API is running. Try /api/users or /api/tasks');
 });
 // Allow CORS
 app.use((req, res, next) => {
